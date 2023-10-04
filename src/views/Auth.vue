@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import Login from "../components/Login.vue";
-import Register from "../components/Register.vue";
+import Login from "@/components/Login.vue";
+import Register from "@/components/Register.vue";
 import { ref } from "vue";
 export default {
   setup() {
