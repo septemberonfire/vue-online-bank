@@ -2,10 +2,10 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    token: null
+    currentUser: null
   }),
   getters: {
-    tokenVal: (state) => state.token,
-    isAuth: (state) => Boolean(state.token)
+    tokenVal: (state) => state.currentUser,
+    isAuth: (state) => Boolean(state.currentUser)
   }
 })

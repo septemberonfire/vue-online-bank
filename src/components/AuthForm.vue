@@ -76,6 +76,8 @@ export default defineComponent({
     const onFinish = (values) => {
       console.log('Success:', values)
       props?.button?.handler(values)
+      loginForm.password = ''
+      loginForm.username = ''
     }
 
     const onFinishFailed = (errorInfo) => {
