@@ -1,17 +1,15 @@
 <template>
   <div>
-    <h3>Вход в систему</h3>
+    <h3>{{ headerText }}</h3>
     <p v-if="errorMessage" class="auth-err">{{ errorMessage }}</p>
     <a-form
       name="loginForm"
       :model="loginForm"
       :label-col="{ span: 2 }"
-      
       :validate-messages="validateMessages"
       @finish="onFinish"
       @finishFailed="onFinishFailed"
       class="auth-form"
-      
     >
       <a-form-item
         label="Email"
@@ -26,67 +24,75 @@
         <a-input
           placeholder="Введите email"
           v-model:value="loginForm.username"
-          id="login-email"
+          :id="`email-${headerText}`"
           class="auth-input"
-          
         />
       </a-form-item>
 
-      <a-form-item
-        label="Пароль"
-        name="password"
-        :rules="[
-          { required: true },
-        ]"
-      >
+      <a-form-item label="Пароль" name="password" :rules="[{ required: true }]">
         <a-input-password
           placeholder="Введите пароль"
           v-model:value="loginForm.password"
-          id="login-password"
+          :id="`password-${headerText}`"
           class="auth-input"
         />
       </a-form-item>
 
       <a-form-item>
-        <a-button type="primary" html-type="submit" class="auth-btn" :disabled="!isValid">Войти</a-button>
+        <a-button
+          type="primary"
+          html-type="submit"
+          class="auth-btn"
+          :disabled="!isValid"
+          >{{ button?.text }}</a-button
+        >
       </a-form-item>
     </a-form>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, ref, computed } from "vue";
-export default {
-  setup() {
+import { computed, defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  props: {
+    headerText: String,
+    button: Object,
+  },
+  setup(props) {
     const errorMessage = ref('')
     const loginForm = reactive({
-      username: "",
-      password: "",
-    });
+      username: '',
+      password: '',
+    })
     const validateMessages = {
-      required: "Поле ${label} обязательно к заполнению",
+      required: 'Поле ${label} обязательно к заполнению',
       types: {
-        email: "${label} введён некорректно. Попробуйте ещё раз"
+        email: '${label} введён некорректно. Попробуйте ещё раз',
       },
-    };
+    }
     const isValid = computed(() => loginForm.username && loginForm.password)
+
     const onFinish = (values) => {
-      console.log("Success:", values);
-    };
+      console.log('Success:', values)
+      props?.button?.handler(values)
+    }
+
     const onFinishFailed = (errorInfo) => {
-      console.log("Failed:", errorInfo);
+      console.log('Failed:', errorInfo)
       errorMessage.value = 'Произошла ошибка'
-    };
+    }
+
     return {
       loginForm,
       onFinish,
       onFinishFailed,
       validateMessages,
       isValid,
-      errorMessage
-    };
+      errorMessage,
+    }
   },
-};
+})
 </script>
 
 <style scoped>
@@ -101,5 +107,4 @@ export default {
 .auth-err {
   color: red;
 }
-
 </style>

@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/help',
     name: 'Help',
-    component: () => import('../views/Help.vue'),
+    component: () => import('@/views/Help.vue'),
     meta: {
       layout: 'Main',
       authRequired: true
@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/auth',
     name: 'Auth',
-    component: () => import('../views/Auth.vue'),
+    component: () => import('@/views/Auth.vue'),
     meta: {
       layout: 'Auth',
       authRequired: false
